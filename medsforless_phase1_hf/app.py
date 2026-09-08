@@ -138,7 +138,7 @@ def get_dashboard():
 | Check | Result | How verified |
 |---|---|---|
 | **No duplicate replies** | `wamid` PRIMARY KEY prevents duplicates | Try idempotency test button below - should show UNIQUE constraint failed |
-| **Verified logs** | Logs redacted via `safe_log()` - no wa_id / PHI | Check logs: `{"{safe_log("971506583391")}"` |
+| **Verified logs** | Logs redacted via `safe_log()` - no wa_id / PHI | Check logs: `{safe_log('971506583391')}` |
 | **Replay tests** | `test_replay.py` passes | Run replay test |
 
 - **Total messages in DB (not dict):** {total} - proves DB-backed not in-memory dict per Critical fix

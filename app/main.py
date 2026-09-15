@@ -268,7 +268,7 @@ def get_initial():
         "DB empty — send first message"
     )
 
-with gr.Blocks(theme=gr.themes.Soft(primary_hue="blue"), title="Medsforless Phase 1 v1.1 — 22 QA Intents") as demo:
+with gr.Blocks(title="Medsforless Phase 1 v1.1 — 22 QA Intents") as demo:
     gr.Markdown("# 🏥 Medsforless Phase 1 v1.1 — Deterministic MVP\n**QA Scenarios v1.1 — 22 intents | Security Review Compliant | No LLM, No Media Intake**")
     gr.Markdown("**Scope:** Webhook auth (HMAC), queue (<200ms), DB (wamid PK), FAQ auto (5 intents), Human Escalation (17 intents), Office Hours 9AM-11PM Dubai, Suppression Table, Audit Logs | **Exit Criteria:** No duplicate replies, Verified redacted logs, Replay tests")
     
@@ -311,5 +311,5 @@ with gr.Blocks(theme=gr.themes.Soft(primary_hue="blue"), title="Medsforless Phas
 app = gr.mount_gradio_app(app, demo, path="/")
 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+    import uvicorn, os
+    uvicorn.run("app.main:app", host="0.0.0.0", port=int(os.environ.get("PORT", 10000)), reload=False)

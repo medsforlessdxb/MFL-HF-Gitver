@@ -162,8 +162,11 @@ async def webhook_handler(request: Request):
                     
                     # Fast enqueue — return 200 in <200ms, worker processes via handle_message_logic
                     result = handle_message_logic(wa_id, text, has_media, mtype, wamid)
-                    # TODO: In Phase 2+ send reply via Graph API if not suppressed
-                    # For Phase 1, reply is logged and human dashboard will handle
+                    # Send reply via WhatsApp if we have a reply and message was processed
+                    if result.get("reply") and result.get("ok") and result.get("intent") != "suppressed":
+                        from app.whatsapp_sender import send_text
+                        send_text(wa_id, result["reply"])
+
     except Exception as e:
         # Return 5xx for transient so Meta retries — High fix
         logger.error(f"Transient error processing webhook: {e}", exc_info=True)
